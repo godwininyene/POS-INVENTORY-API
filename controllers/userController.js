@@ -14,7 +14,7 @@ const filterObj = (obj, ...allowFields) => {
 
 
 exports.createUser = catchAsync(async (req, res, next) => {
-     // Cloudinary URL is now available in req.file.path
+    // Cloudinary URL is now available in req.file.path
     if (req.file) {
         req.body.photo = req.file.path; // Cloudinary URL
     }
@@ -29,7 +29,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-    const users = await User.find({active:true}).sort({ createdAt: -1 });
+    const users = await User.find({ active: true }).sort({ createdAt: -1 });
     res.status(200).json({
         status: "success",
         result: users.length,
@@ -91,10 +91,9 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm) {
         return next(new AppError("This route is not for password updates, please use /updateMyPassword", '', 401));
     }
-
+    // Cloudinary URL is now available in req.file.path
     if (req.file) {
-        const host = `${req.protocol}://${req.get('host')}`;
-        req.body.photo = `${host}/uploads/users/${req.file.filename}`;
+        req.body.photo = req.file.path; // Cloudinary URL
     }
 
     //2) Update the user document
@@ -114,7 +113,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     // const user = await User.findByIdAndDelete(req.params.id);
 
     // Instead of findByIdAndDelete, use:
-    const user = await User.findByIdAndUpdate(req.params.id, {active: false,}, { new: true });
+    const user = await User.findByIdAndUpdate(req.params.id, { active: false, }, { new: true });
     if (!user) {
         return next(new AppError('No user was found with that ID', '', 404))
     }
