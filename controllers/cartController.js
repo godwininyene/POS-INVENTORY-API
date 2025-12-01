@@ -83,17 +83,16 @@ exports.getCart = catchAsync(async (req, res, next) => {
         total: cart.totalAmount
     };
 
-     cart = {
-        items:cart.items,
-        summary
-    }
+    
 
     // 4. Return cart with product coverImage
     res.status(200).json({
         status: "success",
         result: cart.items.length,
         data: {
-          cart
+            cartId: cart._id,     
+            items: cart.items,
+            summary
         }
     });
 });
