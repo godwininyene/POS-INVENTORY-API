@@ -125,7 +125,7 @@ exports.updateQuantity = catchAsync(async (req, res, next) => {
     }
 
     // 4. Update quantity
-    item.quantity += quantity;
+    item.quantity= quantity;
 
     // 5. Update item total
     item.total = item.price * item.quantity;
