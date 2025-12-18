@@ -69,7 +69,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
     // Cloudinary URL is now available in req.file.path
     if (req.file) {
-        req.filterBody.photo = req.file.path; // Cloudinary URL
+        filterBody.photo = req.file.path; // Cloudinary URL
     }
 
 
